@@ -1,7 +1,7 @@
 /* eslint valid-jsdoc: "off" */
 
 'use strict';
-
+const mongoose = require('mongoose');
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -14,9 +14,13 @@ module.exports = appInfo => {
 
     // use for cookie sign key, should change to your own and keep security
     config.keys = appInfo.name + '_1562462326934_9666';
-    console.log(config.keys);
+
+
+
+
     // add your middleware config here
-    config.middleware = [];
+    config.middleware = ['auth', 'gzip'];
+
 
     // add your user config here
     const userConfig = {
@@ -27,6 +31,15 @@ module.exports = appInfo => {
             '.html': 'nunjucks',
         }
     };
+
+    //配置mongoose
+    config.mongoose = {
+        client: {
+            url: 'mongodb://127.0.0.1:27017/productManage',
+            options: {},
+        },
+    };
+
     return {
         ...config,
         ...userConfig,
